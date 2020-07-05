@@ -4,10 +4,11 @@
 
 #ifndef SRC_CREATION_CMDS_H
 #define SRC_CREATION_CMDS_H
-#include "ICommand.h"
+#include "i_command.h"
+#include "parser.h"
 
 class CreationCmds: public ICommand{
-    /*virtual*/ void run() = 0;
+    /*virtual*/ void run(const Parser& cmd) = 0;
 };
 
 #endif //SRC_CREATION_CMDS_H
