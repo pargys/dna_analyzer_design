@@ -9,7 +9,7 @@
 
 class Parser{
 public:
-    void parseInput(std::string input);
+    void parseInput(std::string& input);
     const std::string& getCmdName()const {return m_cmdName;}
     const std::vector<std::string>& getParams()const {return m_params;}
 
