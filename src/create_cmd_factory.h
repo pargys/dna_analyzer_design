@@ -6,10 +6,11 @@
 #define SRC_CREATE_CMD_FACTORY_H
 class ICommand;
 #include <string>
+#include "parser.h"
 
 class CreateCmdFactory{
 public:
-    static ICommand* create(const std::string& cmdName);
+    static ICommand* create(const Parser& cmdName);
 };
 
 #endif //SRC_CREATE_CMD_FACTORY_H

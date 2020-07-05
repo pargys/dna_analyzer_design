@@ -5,9 +5,9 @@
 #include "create_cmd_factory.h"
 #include "new_cmd.h"
 
-ICommand* CreateCmdFactory::create(const std::string &cmdName){
-    if(cmdName == "new"){
-        return new NewCmd;
+ICommand* CreateCmdFactory::create(const Parser& cmdName){
+    if(cmdName.getCmdName() == "new"){
+        return new NewCmd(cmdName);
     }
     return NULL;
 }
