@@ -3,7 +3,7 @@
 //
 #include "parser.h"
 
-void Parser::parseInput(std::string& input){
+void Parser::parseInput(std::string input){
     size_t pos=0;
     std::string param, delimiter=" ";
 
