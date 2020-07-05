@@ -12,9 +12,8 @@
 
 class StructureDna{
 public:
-    static std::map<IdDna, MetaDataDna>& getIdStructure();
+    static std::map<IdDna, MetaDataDna*>& getIdStructure();
     static std::map<NameDna, MetaDataDna*>& getNameStructure();
-    static std::map<StatusDna, MetaDataDna*>& getStatusStructure();
 };
 
 #endif //SRC_STRUCTURE_DNA_H
