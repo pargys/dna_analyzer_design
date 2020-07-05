@@ -5,10 +5,12 @@
 #ifndef SRC_NEW_CMD_H
 #define SRC_NEW_CMD_H
 #include "creation_cmds.h"
+#include "parser.h"
 
 class NewCmd: public CreationCmds{
 public:
-    /*virtual*/void run(std::vector<std::string>);
+    NewCmd(const Parser& cmd);
+    /*virtual*/void run(const Parser& cmd);
 };
 
 #endif //SRC_NEW_CMD_H
