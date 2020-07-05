@@ -8,6 +8,7 @@
 
 class NameDna{
 public:
+    NameDna(const std::string& name = ""):m_name(name){}
     const std::string& getDna()const {return m_name;}
 
 private:
