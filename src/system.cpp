@@ -16,7 +16,7 @@ void System::start(){
         if(p.getCmdName() == "quit"){
             break;
         }
-        ICommand* cmd = CreateCmdFactory::create(p.getCmdName());
-        cmd->run(p.getParams());
+        ICommand* cmd = CreateCmdFactory::create(p);
+        cmd->run(p);
     }
 }
