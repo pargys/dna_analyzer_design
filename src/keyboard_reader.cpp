@@ -5,6 +5,6 @@
 #include <iostream>
 #include "keyboard_reader.h"
 void KeyboardReader::read(){
-    std::cout<< "please enter str"<< std::endl;
-    std::cin>> m_str;
+    std::cout<< "> cmd >>>"<< std::endl;
+    std::getline(std::cin, m_str, '\n');
 }
