@@ -6,7 +6,8 @@
 #define SRC_LOAD_CMD_H
 #include "creation_cmds.h"
 
-class LoadCmd{
+class LoadCmd: public CreationCmds{
+public:
     LoadCmd(const Parser& cmd);
     /*virtual*/void run(const Parser& cmd);
     /*virtual*/void print(IWriter* writer);
