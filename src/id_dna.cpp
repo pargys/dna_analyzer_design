@@ -2,8 +2,8 @@
 // Created by y on 7/5/20.
 //
 #include "id_dna.h"
-IdDna& IdDna::operator++(){
-    ++m_id;
+const IdDna IdDna::operator++(){
+    m_id+=1;
     return *this;
 }
 
