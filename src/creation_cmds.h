@@ -8,7 +8,10 @@
 #include "parser.h"
 
 class CreationCmds: public ICommand{
+public:
     /*virtual*/ void run(const Parser& cmd) = 0;
+    /*virtual*/ void print(IWriter* writer) = 0;
+    static size_t countDna;
 };
 
 #endif //SRC_CREATION_CMDS_H
