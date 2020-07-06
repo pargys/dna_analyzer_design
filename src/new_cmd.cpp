@@ -12,7 +12,6 @@ NewCmd::NewCmd(const Parser& cmd){
 }
 
 void NewCmd::run(const Parser& cmd){
-    static size_t countDna = 0;
     std::string dnaName;
     std::stringstream ss;
     if(cmd.getParams().size() == 1){
@@ -24,5 +23,12 @@ void NewCmd::run(const Parser& cmd){
     }
     MetaDataDna* data = new MetaDataDna(cmd.getParams()[0], dnaName, (std::string)"new");
     StructureDna::getIdStructure().insert(std::pair<IdDna, MetaDataDna*> (MetaDataDna::getId(), data));
+    StructureDna::getNameStructure().insert(std::pair<NameDna, MetaDataDna*>(dnaName, data));
 }
 
+void NewCmd::print(IWriter* writer){
+    std::stringstream idString;
+    idString<< StructureDna::getIdStructure()[MetaDataDna::getId()]->getId().getId();
+    std::string s = "[" + idString.str() + "]" + " " + StructureDna::getIdStructure()[MetaDataDna::getId()]->getName().getName() + ": " + StructureDna::getIdStructure()[MetaDataDna::getId()]->getDnaSeq().getDna() + "\n";
+    writer->write(s);
+}
