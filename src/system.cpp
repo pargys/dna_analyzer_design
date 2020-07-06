@@ -6,11 +6,13 @@
 #include "parser.h"
 #include "create_cmd_factory.h"
 #include "i_command.h"
+#include "screen_writer.h"
 
 void System::start(){
-    KeyboardReader input;
-    Parser p;
     while(true){
+        KeyboardReader input;
+        Parser p;
+        ScreenWriter writer;
         input.read();
         p.parseInput(input.getStr());
         if(p.getCmdName() == "quit"){
@@ -18,5 +20,6 @@ void System::start(){
         }
         ICommand* cmd = CreateCmdFactory::create(p);
         cmd->run(p);
+        cmd->print(&writer);
     }
 }
