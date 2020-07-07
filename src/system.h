@@ -4,10 +4,12 @@
 
 #ifndef SRC_SYSTEM_H
 #define SRC_SYSTEM_H
+class IReader;
+class IWriter;
 
 class System{
 public:
-    void start();
+    void start(IReader* input, IWriter* output);
 };
 
 #endif //SRC_SYSTEM_H
