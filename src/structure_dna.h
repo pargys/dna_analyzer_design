@@ -4,16 +4,22 @@
 
 #ifndef SRC_STRUCTURE_DNA_H
 #define SRC_STRUCTURE_DNA_H
+
 #include <map>
-#include "id_dna.h"
-#include "name_dna.h"
-#include "status_dna.h"
 #include "meta_data_dna.h"
+
+class IdDna;
+class NameDna;
 
 class StructureDna{
 public:
-    static std::map<IdDna, MetaDataDna*>& getIdStructure();
-    static std::map<NameDna, MetaDataDna*>& getNameStructure();
+    void add(MetaDataDna* dna);
+    std::map<IdDna, MetaDataDna*>& getIdStructure(){return m_idStructure;}
+    std::map<NameDna, MetaDataDna*>& getNameStructure(){return m_nameStructure;}
+
+private:
+    std::map<IdDna, MetaDataDna*> m_idStructure;
+    std::map<NameDna, MetaDataDna*> m_nameStructure;
 };
 
 #endif //SRC_STRUCTURE_DNA_H
