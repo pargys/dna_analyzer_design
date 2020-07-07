@@ -5,18 +5,16 @@
 #include "parser.h"
 #include "create_cmd_factory.h"
 #include "i_command.h"
-#include "ireader.h"
 
-void Terminal::startApp(IReader* input, IWriter* output){
+void Terminal::startApp(IReader& input, IWriter& output, StructureDna& structure){
     while(true){
         Parser p;
-        input->read();
-        p.parseInput(input->getStr());
+        input.read();
+        p.parseInput(input.getStr());
         if(p.getCmdName() == "quit"){
             break;
         }
         ICommand* cmd = CreateCmdFactory::create(p);
-        cmd->run(p);
-        cmd->print(output);
+        cmd->run(p, structure, output);
     }
 }

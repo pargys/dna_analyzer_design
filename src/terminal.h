@@ -4,12 +4,14 @@
 
 #ifndef SRC_TERMINAL_H
 #define SRC_TERMINAL_H
+
+#include "structure_dna.h"
 class IReader;
 class IWriter;
 
 class Terminal{
 public:
-    void startApp(IReader* input, IWriter* output);
+    void startApp(IReader& input, IWriter& output, StructureDna& structure);
 };
 
 #endif //SRC_TERMINAL_H
