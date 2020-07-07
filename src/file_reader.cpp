@@ -5,9 +5,9 @@
 #include <fstream>
 #include "file_reader.h"
 
-void FileReader::read(std::string fileName){
+void FileReader::read(){
     std::ifstream file;
-    file.open(fileName.c_str());
+    file.open(m_fileName);
     if(!file.is_open()){
         throw std::ifstream::failure("the file is close!!");
     }
