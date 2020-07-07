@@ -5,6 +5,7 @@
 #include "create_cmd_factory.h"
 #include "new_cmd.h"
 #include "load_cmd.h"
+#include "parser.h"
 
 ICommand* CreateCmdFactory::create(const Parser& cmd){
     if(cmd.getCmdName() == "new"){

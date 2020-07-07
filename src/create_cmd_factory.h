@@ -4,9 +4,9 @@
 
 #ifndef SRC_CREATE_CMD_FACTORY_H
 #define SRC_CREATE_CMD_FACTORY_H
+
 class ICommand;
-#include <string>
-#include "parser.h"
+class Parser;
 
 class CreateCmdFactory{
 public:
