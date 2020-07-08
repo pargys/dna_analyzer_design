@@ -14,8 +14,10 @@ class NameDna;
 class StructureDna{
 public:
     void add(MetaDataDna* dna);
-    std::map<IdDna, MetaDataDna*>& getIdStructure(){return m_idStructure;}
-    std::map<NameDna, MetaDataDna*>& getNameStructure(){return m_nameStructure;}
+    MetaDataDna& find(const IdDna& id);
+    MetaDataDna& find(const NameDna& name);
+    bool isExist(const IdDna& id) const;
+    bool isExist(const NameDna& name) const;
 
 private:
     std::map<IdDna, MetaDataDna*> m_idStructure;
