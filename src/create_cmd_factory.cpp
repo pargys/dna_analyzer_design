@@ -5,6 +5,7 @@
 #include "create_cmd_factory.h"
 #include "new_cmd.h"
 #include "load_cmd.h"
+#include "dup_cmd.h"
 #include "parser.h"
 
 ICommand* CreateCmdFactory::create(const Parser& cmd){
@@ -13,6 +14,9 @@ ICommand* CreateCmdFactory::create(const Parser& cmd){
     }
     if(cmd.getCmdName() == "load"){
         return new LoadCmd(cmd);
+    }
+    if(cmd.getCmdName() == "dup"){
+        return new DupCmd(cmd);
     }
     return NULL;
 }
