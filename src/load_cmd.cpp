@@ -11,9 +11,21 @@
 #include "meta_data_dna.h"
 
 LoadCmd::LoadCmd(const Parser& cmd){
-    if(cmd.getParams().size() < 1 || cmd.getParams().size() > 2){
+    if(!isValid(cmd)){
         throw std::invalid_argument("invalid nums of arguments!");
     }
+}
+
+bool LoadCmd::isValid(const Parser &cmd) {
+    if(cmd.getParams().size() < 1 || cmd.getParams().size() > 2){
+        return false;
+    }
+    if(cmd.getParams().size() == 2){
+        if(cmd.getParams()[1][0] != '@'){
+            return false;
+        }
+    }
+    return true;
 }
 
 void LoadCmd::run(const Parser &cmd, StructureDna& structure, IWriter& output){

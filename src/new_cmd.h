@@ -13,6 +13,7 @@ public:
     /*virtual*/void run(const Parser& cmd, StructureDna& structure, IWriter& output);
 
 private:
+    bool isValid(const Parser& cmd);
     void print(StructureDna& structure, IWriter& output);
 };
 

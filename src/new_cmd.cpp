@@ -9,9 +9,21 @@
 #include "iwriter.h"
 
 NewCmd::NewCmd(const Parser& cmd){
-    if(cmd.getParams().size() < 1 || cmd.getParams().size() > 2){
+    if(!isValid(cmd)){
         throw std::invalid_argument("invalid nums of arguments!");
     }
+}
+
+bool NewCmd::isValid(const Parser &cmd) {
+    if(cmd.getParams().size() < 1 || cmd.getParams().size() > 2){
+        return false;
+    }
+    if(cmd.getParams().size() == 2){
+        if(cmd.getParams()[1][0] != '@'){
+            return false;
+        }
+    }
+    return true;
 }
 
 void NewCmd::run(const Parser& cmd, StructureDna& structure, IWriter& output) {
@@ -40,3 +52,5 @@ void NewCmd::print(StructureDna& structure, IWriter& output){
     idString<< structure.find(MetaDataDna::getId()).getId().getId();
     output.write("[" + idString.str() + "]" + " " + structure.find(MetaDataDna::getId()).getName().getName() + ": " + structure.find(MetaDataDna::getId()).getDnaSeq().getDna() + "\n");
 }
+
+
