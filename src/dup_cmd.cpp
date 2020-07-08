@@ -92,3 +92,7 @@ void DupCmd::runForName(const Parser &cmd, StructureDna &structure, IWriter& out
     structure.add(data);
 }
 
+void DupCmd::print(StructureDna &structure, IWriter &output){
+    std::string id = numToString(structure.find(MetaDataDna::getId()).getId().getId());
+    output.write("[" + id + "]" + " " + structure.find(MetaDataDna::getId()).getName().getName() + ": " + structure.find(MetaDataDna::getId()).getDnaSeq().getDna() + "\n");
+}
