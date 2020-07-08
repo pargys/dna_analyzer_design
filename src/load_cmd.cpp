@@ -26,19 +26,25 @@ void LoadCmd::run(const Parser &cmd, StructureDna& structure, IWriter& output){
     else{
         dnaName = cmd.getParams()[1];
     }
+    if(structure.isExist(dnaName)){
+        MetaDataDna temp(structure.find(dnaName));
+        std::stringstream counterString;
+        counterString<< temp.getCounter();
+        dnaName = dnaName + "_" + counterString.str();
+        temp.increaseCounter();
+    }
     MetaDataDna* data = new MetaDataDna(file, dnaName, (std::string)"new");
     structure.add(data);
     print(structure, output);
 }
 
 void LoadCmd::print(StructureDna& structure, IWriter& writer){
-    std::stringstream idString;
-    std::string nameDna = structure.getIdStructure()[MetaDataDna::getId()]->getDnaSeq().getDna();
-    size_t n = nameDna.length();
+    std::string dna = structure.find(MetaDataDna::getId()).getDnaSeq().getDna();
+    size_t n = dna.length();
     if(n > 40){
-        nameDna = nameDna.substr(0, 31) + "..." + nameDna.substr(n-3, n-1);
+        dna = dna.substr(0, 31) + "..." + dna.substr(n-3, n-1);
     }
-
-    idString<< structure.getIdStructure()[MetaDataDna::getId()]->getId().getId();
-    writer.write("[" + idString.str() + "]" + " " + structure.getIdStructure()[MetaDataDna::getId()]->getName().getName() + ": " + nameDna + "\n");
+    std::stringstream idString;
+    idString<< structure.find(MetaDataDna::getId()).getId().getId();
+    writer.write("[" + idString.str() + "]" + " " + structure.find(MetaDataDna::getId()).getName().getName() + ": " + dna + "\n");
 }
