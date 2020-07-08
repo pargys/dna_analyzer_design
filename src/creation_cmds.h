@@ -11,7 +11,6 @@
 class CreationCmds: public ICommand{
 public:
     /*virtual*/ void run(const Parser& cmd, StructureDna& structure, IWriter& output) = 0;
-    static size_t countDna;
 };
 
 #endif //SRC_CREATION_CMDS_H
