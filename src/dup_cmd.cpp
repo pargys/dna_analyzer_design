@@ -28,3 +28,67 @@ bool DupCmd::isValid(const Parser &cmd) {
     return true;
 }
 
+void DupCmd::run(const Parser& cmd, StructureDna& structure, IWriter& output){
+    if(cmd.getParams()[0][0] == '#'){
+        runForId(cmd, structure, output);
+    }
+    else if(cmd.getParams()[0][0] == '@'){
+        runForName(cmd, structure, output);
+    }
+    print(structure, output);
+}
+
+void DupCmd::runForId(const Parser &cmd, StructureDna &structure, IWriter& output){
+    size_t id = stringToNum(cmd.getParams()[0].substr(1));
+    if(!structure.isExist(id)){
+        output.write("id is not exist! please enter again\n");
+        return;
+    }
+    std::string dnaName, name = structure.find(id).getName().getName();
+    if(cmd.getParams().size() == 1){
+        structure.find(id).increaseCounter();
+        dnaName = name + "_" + numToString(structure.find(id).getCounter());
+        while(structure.isExist(dnaName)){
+            structure.find(dnaName).increaseCounter();
+            dnaName = name + "_" + numToString(structure.find(dnaName).getCounter());
+        }
+    }
+    else{
+        dnaName = cmd.getParams()[1].substr(1);
+        if(structure.isExist(dnaName)){
+            output.write("name is exist! please enter again\n");
+            return;
+        }
+    }
+    std::string dna = structure.find(id).getDnaSeq().getDna();
+    MetaDataDna* data = new MetaDataDna(dna, dnaName, (std::string)"new");
+    structure.add(data);
+}
+
+void DupCmd::runForName(const Parser &cmd, StructureDna &structure, IWriter& output){
+    std::string name = cmd.getParams()[0].substr(1);
+    if(!structure.isExist(name)){
+        output.write("name is not exist! please enter again\n");
+        return;
+    }
+    std::string dnaName;
+    if(cmd.getParams().size() == 1){
+        structure.find(name).increaseCounter();
+        dnaName = name + "_" + numToString(structure.find(name).getCounter());
+        while(structure.isExist(dnaName)){
+            structure.find(dnaName).increaseCounter();
+            dnaName = name + "_" + numToString(structure.find(dnaName).getCounter());
+        }
+    }
+    else{
+        dnaName = cmd.getParams()[1].substr(1);
+        if(structure.isExist(dnaName)){
+            output.write("name is exist! please enter again\n");
+            return;
+        }
+    }
+    std::string dna = structure.find(name).getDnaSeq().getDna();
+    MetaDataDna* data = new MetaDataDna(dna, dnaName, (std::string)"new");
+    structure.add(data);
+}
+
