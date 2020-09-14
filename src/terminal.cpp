@@ -14,7 +14,14 @@ void Terminal::startApp(IReader& input, IWriter& output, StructureDna& structure
         if(p.getCmdName() == "quit"){
             break;
         }
-        ICommand* cmd = CreateCmdFactory::create(p);
-        cmd->run(p, structure, output);
+        try{
+            ICommand* cmd = CreateCmdFactory::create(p);
+            cmd->run(p, structure, output);
+        }
+        catch(const std::invalid_argument& e){
+            output.write(e.what());
+        }
+
     }
+    CreateCmdFactory::release();
 }

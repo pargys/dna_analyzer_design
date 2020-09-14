@@ -10,11 +10,6 @@
 #include "meta_data_dna.h"
 #include "auxiliary_functions.h"
 
-LoadCmd::LoadCmd(const Parser& cmd){
-    if(!isValid(cmd)){
-        throw std::invalid_argument("invalid nums of arguments!");
-    }
-}
 
 bool LoadCmd::isValid(const Parser &cmd) {
     if(cmd.getParams().size() < 1 || cmd.getParams().size() > 2){
@@ -54,11 +49,18 @@ void LoadCmd::run(const Parser &cmd, StructureDna& structure, IWriter& output){
 }
 
 void LoadCmd::print(StructureDna& structure, IWriter& writer){
-    std::string dna = structure.find(MetaDataDna::getId()).getDnaSeq().getDna();
+    MetaDataDna metaData(structure.find(MetaDataDna::getId()));
+    std::string dna = metaData.getDnaSeq().getDna();
     size_t n = dna.length();
     if(n > 40){
         dna = dna.substr(0, 31) + "..." + dna.substr(n-3, n-1);
     }
-    std::string id = numToString(structure.find(MetaDataDna::getId()).getId().getId());
-    writer.write("[" + id + "]" + " " + structure.find(MetaDataDna::getId()).getName().getName() + ": " + dna + "\n");
+    std::string id = numToString(metaData.getId().getId());
+    writer.write("[" + id + "]" + " " + metaData.getName().getName() + ": " + dna + "\n");
+}
+
+void LoadCmd::createCmd(const Parser &cmd) {
+    if(!isValid(cmd)){
+        throw std::invalid_argument("invalid nums of arguments!");
+    }
 }

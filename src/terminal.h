@@ -6,8 +6,9 @@
 #define SRC_TERMINAL_H
 
 #include "structure_dna.h"
+#include "iwriter.h"
+
 class IReader;
-class IWriter;
 
 class Terminal{
 public:

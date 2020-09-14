@@ -8,12 +8,6 @@
 #include "iwriter.h"
 #include "auxiliary_functions.h"
 
-NewCmd::NewCmd(const Parser& cmd){
-    if(!isValid(cmd)){
-        throw std::invalid_argument("invalid nums of arguments!");
-    }
-}
-
 bool NewCmd::isValid(const Parser &cmd) {
     if(cmd.getParams().size() < 1 || cmd.getParams().size() > 2){
         return false;
@@ -49,8 +43,15 @@ void NewCmd::run(const Parser& cmd, StructureDna& structure, IWriter& output) {
 
 
 void NewCmd::print(StructureDna& structure, IWriter& output){
-    std::string id = numToString(structure.find(MetaDataDna::getId()).getId().getId());
-    output.write("[" + id + "]" + " " + structure.find(MetaDataDna::getId()).getName().getName() + ": " + structure.find(MetaDataDna::getId()).getDnaSeq().getDna() + "\n");
+    MetaDataDna metaData(structure.find(MetaDataDna::getId()));
+    std::string id = numToString(metaData.getId().getId());
+    output.write("[" + id + "]" + " " + metaData.getName().getName() + ": " + metaData.getDnaSeq().getDna() + "\n");
+}
+
+void NewCmd::createCmd(const Parser &cmd) {
+    if(!isValid(cmd)){
+        throw std::invalid_argument("invalid nums of arguments!");
+    }
 }
 
 

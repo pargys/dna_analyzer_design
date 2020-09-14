@@ -9,8 +9,9 @@
 
 class NewCmd: public CreationCmds{
 public:
-    NewCmd(const Parser& cmd);
+    /*virtual*/void createCmd(const Parser& cmd);
     /*virtual*/void run(const Parser& cmd, StructureDna& structure, IWriter& output);
+    /*virtual*/~NewCmd(){}
 
 private:
     bool isValid(const Parser& cmd);

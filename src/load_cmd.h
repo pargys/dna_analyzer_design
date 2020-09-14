@@ -9,8 +9,9 @@
 
 class LoadCmd: public CreationCmds{
 public:
-    LoadCmd(const Parser& cmd);
+    /*virtual*/void createCmd(const Parser& cmd);
     /*virtual*/void run(const Parser& cmd, StructureDna& structure, IWriter& output);
+    /*virtual*/~LoadCmd(){}
 
 private:
     bool isValid(const Parser& cmd);

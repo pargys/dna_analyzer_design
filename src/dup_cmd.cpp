@@ -7,11 +7,6 @@
 #include "auxiliary_functions.h"
 #include "iwriter.h"
 
-DupCmd::DupCmd(const Parser &cmd){
-    if(!isValid(cmd)){
-        throw std::invalid_argument("invalid nums of arguments!");
-    }
-}
 
 bool DupCmd::isValid(const Parser &cmd) {
     if(cmd.getParams().size() < 1 || cmd.getParams().size() > 2){
@@ -93,6 +88,13 @@ void DupCmd::runForName(const Parser &cmd, StructureDna &structure, IWriter& out
 }
 
 void DupCmd::print(StructureDna &structure, IWriter &output){
-    std::string id = numToString(structure.find(MetaDataDna::getId()).getId().getId());
-    output.write("[" + id + "]" + " " + structure.find(MetaDataDna::getId()).getName().getName() + ": " + structure.find(MetaDataDna::getId()).getDnaSeq().getDna() + "\n");
+    MetaDataDna metaData(structure.find(MetaDataDna::getId()));
+    std::string id = numToString(metaData.getId().getId());
+    output.write("[" + id + "]" + " " + metaData.getName().getName() + ": " + metaData.getDnaSeq().getDna() + "\n");
+}
+
+void DupCmd::createCmd(const Parser &cmd) {
+    if(!isValid(cmd)){
+        throw std::invalid_argument("invalid nums of arguments!");
+    }
 }

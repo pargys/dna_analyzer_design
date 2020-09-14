@@ -11,7 +11,9 @@ class IWriter;
 
 class ICommand{
 public:
+    virtual void createCmd(const Parser& cmd) = 0;
     virtual void run(const Parser& cmd, StructureDna& structure, IWriter& output) = 0;
+    virtual ~ICommand() = 0;
 };
 
 #endif //SRC_I_COMMAND_H
