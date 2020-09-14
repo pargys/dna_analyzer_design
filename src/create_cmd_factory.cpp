@@ -17,16 +17,6 @@ ICommand* CreateCmdFactory::create(const Parser& cmd){
     catch (const std::out_of_range& e){
         return NULL;
     }
-//    if(cmd.getCmdName() == "new"){
-//        return new NewCmd(cmd);
-//    }
-//    if(cmd.getCmdName() == "load"){
-//        return new LoadCmd(cmd);
-//    }
-//    if(cmd.getCmdName() == "dup"){
-//        return new DupCmd(cmd);
-//    }
-//    return NULL;
 }
 
 std::map<std::string, ICommand*> CreateCmdFactory::s_commands = CreateCmdFactory::init();
