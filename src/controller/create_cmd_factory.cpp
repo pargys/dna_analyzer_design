@@ -8,6 +8,7 @@
 #include "load_cmd.h"
 #include "dup_cmd.h"
 #include "save_cmd.h"
+#include "len_cmd.h"
 #include "parser.h"
 
 std::map<std::string, ICommand*> CreateCmdFactory::s_commands;
@@ -29,6 +30,7 @@ void CreateCmdFactory::init(){
     s_commands.insert(std::pair<std::string, ICommand*> ("load", new LoadCmd()));
     s_commands.insert(std::pair<std::string, ICommand*> ("dup", new DupCmd()));
     s_commands.insert(std::pair<std::string, ICommand*> ("save", new SaveCmd()));
+    s_commands.insert(std::pair<std::string, ICommand*> ("len", new LenCmd()));
 }
 
 void CreateCmdFactory::release(){
@@ -36,5 +38,6 @@ void CreateCmdFactory::release(){
     delete s_commands.at("load");
     delete s_commands.at("dup");
     delete s_commands.at("save");
+    delete s_commands.at("len");
 }
 

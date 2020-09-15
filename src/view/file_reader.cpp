@@ -9,7 +9,8 @@
 void FileReader::read(){
     std::ifstream file;
     file.open(m_filePath.c_str());
-    if(!file.is_open()){
+
+    if (!file.is_open()){
         throw std::ifstream::failure("the file is close!");
     }
     getline(file, m_str);
@@ -19,7 +20,7 @@ void FileReader::read(){
 std::string FileReader::getFileName(){
     std::string splitName = m_filePath;
 
-    while(splitName.find('/') != std::string::npos){
+    while (splitName.find('/') != std::string::npos){
         splitName = splitName.substr(splitName.find('/') + 1);
     }
     std::stringstream s_stream(splitName);

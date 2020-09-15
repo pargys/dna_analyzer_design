@@ -7,7 +7,8 @@ FileWriter::FileWriter(std::string fileName):m_fileName(fileName){}
 
 void FileWriter::write(std::string str) const{
     std::ofstream file;
-    if(!file.is_open()){
+    file.open(m_fileName.c_str());
+    if (!file.is_open()){
         throw std::ifstream::failure("the file is close!!");
     }
     file<< str;
