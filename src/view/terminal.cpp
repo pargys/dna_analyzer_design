@@ -20,7 +20,7 @@ void Terminal::startApp(IReader& input, IWriter& output, StructureDna& structure
 
         try {
             ICommand* cmd = CreateCmdFactory::create(p);
-            cmd->run(p, structure, output);
+            cmd->run(p, structure, output, input);
         }
 
         catch (const std::exception& e){

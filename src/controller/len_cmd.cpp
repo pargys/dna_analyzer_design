@@ -21,7 +21,7 @@ bool LenCmd::isValid(const Parser &cmd) {
     return true;
 }
 
-void LenCmd::run(const Parser &cmd, StructureDna& structure, IWriter& output){
+void LenCmd::run(const Parser &cmd, StructureDna& structure, IWriter& output, IReader& input){
     size_t id = stringToNum(cmd.getParams()[0].substr(1));
 
     if (!structure.isExist(id)){

@@ -10,7 +10,7 @@
 class DupCmd: public CreationCmds{
 public:
     /*virtual*/void createCmd(const Parser& cmd);
-    /*virtual*/void run(const Parser& cmd, StructureDna& structure, IWriter& output);
+    /*virtual*/void run(const Parser& cmd, StructureDna& structure, IWriter& output, IReader& input);
     /*virtual*/~DupCmd() {}
 
 private:

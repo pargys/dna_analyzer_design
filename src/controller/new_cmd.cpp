@@ -9,29 +9,35 @@
 #include "auxiliary_functions.h"
 
 bool NewCmd::isValid(const Parser &cmd) {
-    if(cmd.getParams().size() < 1 || cmd.getParams().size() > 2){
+
+    if (cmd.getParams().size() < 1 || cmd.getParams().size() > 2){
         return false;
     }
-    if(cmd.getParams().size() == 2){
-        if(cmd.getParams()[1][0] != '@'){
+
+    if (cmd.getParams().size() == 2){
+
+        if (cmd.getParams()[1][0] != '@'){
             return false;
         }
     }
     return true;
 }
 
-void NewCmd::run(const Parser& cmd, StructureDna& structure, IWriter& output) {
+void NewCmd::run(const Parser& cmd, StructureDna& structure, IWriter& output, IReader& input) {
     static size_t countDna;
     std::string dnaName;
-    if(cmd.getParams().size() == 1){
+
+    if (cmd.getParams().size() == 1){
         dnaName = "seq" + numToString(++countDna);
-        while(structure.isExist(dnaName)){
+
+        while (structure.isExist(dnaName)){
             dnaName = "seq" + numToString(++countDna);
         }
 
     } else {
         dnaName = cmd.getParams()[1].substr(1);
-        if(structure.isExist(dnaName)){
+
+        if (structure.isExist(dnaName)){
             output.write("name is already exist! please enter again\n");
             return;
         }
@@ -50,7 +56,8 @@ void NewCmd::print(StructureDna& structure, IWriter& output){
 }
 
 void NewCmd::createCmd(const Parser &cmd) {
-    if(!isValid(cmd)){
+
+    if (!isValid(cmd)){
         throw std::invalid_argument("invalid nums of arguments!");
     }
 }

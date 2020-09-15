@@ -25,7 +25,7 @@ bool SaveCmd::isValid(const Parser &cmd) {
 }
 
 
-void SaveCmd::run(const Parser& cmd, StructureDna& structure, IWriter& output){
+void SaveCmd::run(const Parser& cmd, StructureDna& structure, IWriter& output, IReader& input){
     size_t id;
     std::string name, fileName;
     if (cmd.getParams()[0][0] == '@'){

@@ -8,11 +8,12 @@
 class Parser;
 class StructureDna;
 class IWriter;
+class IReader;
 
 class ICommand{
 public:
     virtual void createCmd(const Parser& cmd) = 0;
-    virtual void run(const Parser& cmd, StructureDna& structure, IWriter& output) = 0;
+    virtual void run(const Parser& cmd, StructureDna& structure, IWriter& output, IReader&) = 0;
     virtual ~ICommand() = 0;
 };
 
