@@ -7,10 +7,11 @@
 
 #include "../model/structure_dna.h"
 #include "iwriter.h"
+#include "ui.h"
 
 class IReader;
 
-class Terminal{
+class Terminal: public UI{
 public:
     void startApp(IReader& input, IWriter& output, StructureDna& structure);
 };

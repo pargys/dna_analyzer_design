@@ -7,10 +7,11 @@
 
 class IReader;
 class IWriter;
+class UI;
 
 class System{
 public:
-    void start(IReader& input, IWriter& output);
+    void start(UI& ui, IReader& input, IWriter& output);
 };
 
 #endif //SRC_SYSTEM_H

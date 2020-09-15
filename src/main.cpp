@@ -2,11 +2,13 @@
 #include "controller/system.h"
 #include "view/screen_writer.h"
 #include "view/keyboard_reader.h"
+#include "view/terminal.h"
 
 int main() {
-    System s;
+    System system;
+    Terminal terminal;
     KeyboardReader input;
     ScreenWriter output;
-    s.start(input, output);
+    system.start(terminal, input, output);
     return 0;
 }

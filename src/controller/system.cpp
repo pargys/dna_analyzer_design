@@ -3,10 +3,8 @@
 //
 #include "system.h"
 #include "../view/terminal.h"
-#include "../model/structure_dna.h"
 
-void System::start(IReader& input, IWriter& output){
+void System::start(UI& ui, IReader& input, IWriter& output){
     StructureDna structure;
-    Terminal terminal;
-    terminal.startApp(input, output, structure);
+    ui.startApp(input, output, structure);
 }
