@@ -2,10 +2,10 @@
 // Created by y on 7/6/20.
 //
 #include "dup_cmd.h"
-#include "structure_dna.h"
+#include "../model/structure_dna.h"
 #include "parser.h"
 #include "auxiliary_functions.h"
-#include "iwriter.h"
+#include "../view/iwriter.h"
 
 
 bool DupCmd::isValid(const Parser &cmd) {
@@ -30,7 +30,6 @@ void DupCmd::run(const Parser& cmd, StructureDna& structure, IWriter& output){
     else if(cmd.getParams()[0][0] == '@'){
         runForName(cmd, structure, output);
     }
-    print(structure, output);
 }
 
 void DupCmd::runForId(const Parser &cmd, StructureDna &structure, IWriter& output){
@@ -39,13 +38,13 @@ void DupCmd::runForId(const Parser &cmd, StructureDna &structure, IWriter& outpu
         output.write("id is not exist! please enter again\n");
         return;
     }
-    std::string dnaName, name = structure.find(id).getName().getName();
+    std::string dnaName, name = structure.findDna(id).getName();
     if(cmd.getParams().size() == 1){
-        structure.find(id).increaseCounter();
-        dnaName = name + "_" + numToString(structure.find(id).getCounter());
+        structure.findDna(id).increaseCounter();
+        dnaName = name + "_" + numToString(structure.findDna(id).getCounter());
         while(structure.isExist(dnaName)){
-            structure.find(dnaName).increaseCounter();
-            dnaName = name + "_" + numToString(structure.find(dnaName).getCounter());
+            structure.findDna(dnaName).increaseCounter();
+            dnaName = name + "_" + numToString(structure.findDna(dnaName).getCounter());
         }
     }
     else{
@@ -55,9 +54,11 @@ void DupCmd::runForId(const Parser &cmd, StructureDna &structure, IWriter& outpu
             return;
         }
     }
-    std::string dna = structure.find(id).getDnaSeq().getDna();
+    MetaDataDna metaData = structure.findDna(id);
+    std::string dna = metaData.getDnaSeq()->getDna();
     MetaDataDna* data = new MetaDataDna(dna, dnaName, (std::string)"new");
     structure.add(data);
+    print(structure, output);
 }
 
 void DupCmd::runForName(const Parser &cmd, StructureDna &structure, IWriter& output){
@@ -68,11 +69,11 @@ void DupCmd::runForName(const Parser &cmd, StructureDna &structure, IWriter& out
     }
     std::string dnaName;
     if(cmd.getParams().size() == 1){
-        structure.find(name).increaseCounter();
-        dnaName = name + "_" + numToString(structure.find(name).getCounter());
+        structure.findDna(name).increaseCounter();
+        dnaName = name + "_" + numToString(structure.findDna(name).getCounter());
         while(structure.isExist(dnaName)){
-            structure.find(dnaName).increaseCounter();
-            dnaName = name + "_" + numToString(structure.find(dnaName).getCounter());
+            structure.findDna(dnaName).increaseCounter();
+            dnaName = name + "_" + numToString(structure.findDna(dnaName).getCounter());
         }
     }
     else{
@@ -82,15 +83,16 @@ void DupCmd::runForName(const Parser &cmd, StructureDna &structure, IWriter& out
             return;
         }
     }
-    std::string dna = structure.find(name).getDnaSeq().getDna();
+    std::string dna = structure.findDna(name).getDnaSeq()->getDna();
     MetaDataDna* data = new MetaDataDna(dna, dnaName, (std::string)"new");
     structure.add(data);
+    print(structure, output);
 }
 
 void DupCmd::print(StructureDna &structure, IWriter &output){
-    MetaDataDna metaData(structure.find(MetaDataDna::getId()));
-    std::string id = numToString(metaData.getId().getId());
-    output.write("[" + id + "]" + " " + metaData.getName().getName() + ": " + metaData.getDnaSeq().getDna() + "\n");
+    MetaDataDna metaData(structure.findDna(MetaDataDna::getId()));
+    std::string id = numToString(metaData.getId());
+    output.write("[" + id + "]" + " " + metaData.getName() + ": " + metaData.getDnaSeq()->getDna() + "\n");
 }
 
 void DupCmd::createCmd(const Parser &cmd) {

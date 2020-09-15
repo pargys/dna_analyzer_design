@@ -1,7 +1,7 @@
 //
 // Created by y on 6/30/20.
 //
-#include "file_writer.h"
+#include "../view/file_writer.h"
 #include <fstream>
 FileWriter::FileWriter(std::string fileName):m_fileName(fileName){}
 

@@ -4,8 +4,8 @@
 
 #include "parser.h"
 #include "new_cmd.h"
-#include "structure_dna.h"
-#include "iwriter.h"
+#include "../model/structure_dna.h"
+#include "../view/iwriter.h"
 #include "auxiliary_functions.h"
 
 bool NewCmd::isValid(const Parser &cmd) {
@@ -43,9 +43,10 @@ void NewCmd::run(const Parser& cmd, StructureDna& structure, IWriter& output) {
 
 
 void NewCmd::print(StructureDna& structure, IWriter& output){
-    MetaDataDna metaData(structure.find(MetaDataDna::getId()));
-    std::string id = numToString(metaData.getId().getId());
-    output.write("[" + id + "]" + " " + metaData.getName().getName() + ": " + metaData.getDnaSeq().getDna() + "\n");
+    MetaDataDna metaData(structure.findDna(MetaDataDna::getId()));
+    std::string id = numToString(metaData.getId());
+
+    output.write("[" + id + "]" + " " + metaData.getName() + ": " + metaData.getDnaSeq()->getDna() + "\n");
 }
 
 void NewCmd::createCmd(const Parser &cmd) {

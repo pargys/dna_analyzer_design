@@ -2,9 +2,9 @@
 // Created by y on 7/7/20.
 //
 #include "terminal.h"
-#include "parser.h"
-#include "create_cmd_factory.h"
-#include "i_command.h"
+#include "../controller/parser.h"
+#include "../controller/create_cmd_factory.h"
+#include "../controller/i_command.h"
 
 void Terminal::startApp(IReader& input, IWriter& output, StructureDna& structure){
     while(true){
@@ -18,7 +18,7 @@ void Terminal::startApp(IReader& input, IWriter& output, StructureDna& structure
             ICommand* cmd = CreateCmdFactory::create(p);
             cmd->run(p, structure, output);
         }
-        catch(const std::invalid_argument& e){
+        catch(const std::exception& e){
             output.write(e.what());
         }
 

@@ -1,7 +1,7 @@
 
-#include "system.h"
-#include "screen_writer.h"
-#include "keyboard_reader.h"
+#include "controller/system.h"
+#include "view/screen_writer.h"
+#include "view/keyboard_reader.h"
 
 int main() {
     System s;

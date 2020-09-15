@@ -4,7 +4,6 @@
 
 #include "dna_sequence.h"
 #include <list>
-#include <fstream>
 
 DnaSequence::DnaSequence(const IReader& sequence){
     initDna(sequence.getStr().c_str());

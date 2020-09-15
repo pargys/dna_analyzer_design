@@ -4,6 +4,7 @@
 
 #ifndef DNA_SEQUENCE_KEYBOARD_READER_H
 #define DNA_SEQUENCE_KEYBOARD_READER_H
+
 #include <string>
 #include "ireader.h"
 

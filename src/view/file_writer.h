@@ -4,7 +4,7 @@
 
 #ifndef DNA_SEQUENCE_FILE_WRITER_H
 #define DNA_SEQUENCE_FILE_WRITER_H
-#include "view/iwriter.h"
+#include "iwriter.h"
 
 
 class FileWriter: public IWriter{

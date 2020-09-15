@@ -9,13 +9,13 @@
 #include <iostream>
 #include "string.h"
 #include <list>
-#include "ireader.h"
+#include "../view/ireader.h"
 
 class DnaSequence{
 private:
     class Nucleotid{
     public:
-        Nucleotid(char c): m_c(c){}
+        Nucleotid(const char c): m_c(c){}
         Nucleotid():m_c('\0'){}
         const Nucleotid& operator=(char c);
         char getC();

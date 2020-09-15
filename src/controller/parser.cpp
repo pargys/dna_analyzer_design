@@ -4,7 +4,7 @@
 #include "parser.h"
 
 void Parser::parseInput(std::string input){
-    size_t pos=0;
+    size_t pos;
     std::string param;
     char delimiter=' ';
     if((pos=input.find(delimiter)) == std::string::npos){

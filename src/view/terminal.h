@@ -5,7 +5,7 @@
 #ifndef SRC_TERMINAL_H
 #define SRC_TERMINAL_H
 
-#include "structure_dna.h"
+#include "../model/structure_dna.h"
 #include "iwriter.h"
 
 class IReader;

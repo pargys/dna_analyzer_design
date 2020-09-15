@@ -4,10 +4,10 @@
 
 #include "parser.h"
 #include "load_cmd.h"
-#include "structure_dna.h"
-#include "file_reader.h"
-#include "iwriter.h"
-#include "meta_data_dna.h"
+#include "../model/structure_dna.h"
+#include "../view/file_reader.h"
+#include "../view/iwriter.h"
+#include "../model/meta_data_dna.h"
 #include "auxiliary_functions.h"
 
 
@@ -24,15 +24,16 @@ bool LoadCmd::isValid(const Parser &cmd) {
 }
 
 void LoadCmd::run(const Parser &cmd, StructureDna& structure, IWriter& output){
-    FileReader file(cmd.getParams()[0].c_str());
-    file.read();
     std::string dnaName, fileName = cmd.getParams()[0];
+    FileReader file(fileName.c_str());
+    file.read();
+    fileName = file.getFileName();
     if(cmd.getParams().size() == 1){
-        structure.find(fileName).increaseCounter();
+//        structure.findDna(fileName).increaseCounter();
         dnaName = fileName;
         while(structure.isExist(dnaName)){
-            structure.find(dnaName).increaseCounter();
-            dnaName = fileName + "_" + numToString(structure.find(dnaName).getCounter());
+            structure.findDna(dnaName).increaseCounter();
+            dnaName = fileName + "_" + numToString(structure.findDna(dnaName).getCounter());
         }
     }
     else{
@@ -49,14 +50,14 @@ void LoadCmd::run(const Parser &cmd, StructureDna& structure, IWriter& output){
 }
 
 void LoadCmd::print(StructureDna& structure, IWriter& writer){
-    MetaDataDna metaData(structure.find(MetaDataDna::getId()));
-    std::string dna = metaData.getDnaSeq().getDna();
+    MetaDataDna metaData(structure.findDna(MetaDataDna::getId()));
+    std::string dna = metaData.getDnaSeq()->getDna();
     size_t n = dna.length();
     if(n > 40){
         dna = dna.substr(0, 31) + "..." + dna.substr(n-3, n-1);
     }
-    std::string id = numToString(metaData.getId().getId());
-    writer.write("[" + id + "]" + " " + metaData.getName().getName() + ": " + dna + "\n");
+    std::string id = numToString(metaData.getId());
+    writer.write("[" + id + "]" + " " + metaData.getName() + ": " + dna + "\n");
 }
 
 void LoadCmd::createCmd(const Parser &cmd) {

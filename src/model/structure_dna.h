@@ -14,14 +14,16 @@ class NameDna;
 class StructureDna{
 public:
     void add(MetaDataDna* dna);
-    MetaDataDna& find(const IdDna& id);
-    MetaDataDna& find(const NameDna& name);
-    bool isExist(const IdDna& id) const;
-    bool isExist(const NameDna& name) const;
+    MetaDataDna& findDna(size_t id);
+    MetaDataDna& findDna(const std::string& name);
+    bool isExist(size_t id) const;
+    bool isExist(const std::string& name) const;
+    std::map<size_t, MetaDataDna*> getIdMap() {return m_idStructure;}
+    std::map<std::string, MetaDataDna*> getNameMap() {return m_nameStructure;}
 
 private:
-    std::map<IdDna, MetaDataDna*> m_idStructure;
-    std::map<NameDna, MetaDataDna*> m_nameStructure;
+    std::map<size_t, MetaDataDna*> m_idStructure;
+    std::map<std::string, MetaDataDna*> m_nameStructure;
 };
 
 #endif //SRC_STRUCTURE_DNA_H
