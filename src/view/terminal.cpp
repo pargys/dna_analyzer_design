@@ -7,21 +7,25 @@
 #include "../controller/i_command.h"
 
 void Terminal::startApp(IReader& input, IWriter& output, StructureDna& structure){
-    while(true){
+    CreateCmdFactory::init();
+
+    while (true){
         Parser p;
         input.read();
         p.parseInput(input.getStr());
-        if(p.getCmdName() == "quit"){
+
+        if (p.getCmdName() == "quit"){
             break;
         }
-        try{
+
+        try {
             ICommand* cmd = CreateCmdFactory::create(p);
             cmd->run(p, structure, output);
         }
-        catch(const std::exception& e){
+
+        catch (const std::exception& e){
             output.write(e.what());
         }
-
     }
     CreateCmdFactory::release();
 }

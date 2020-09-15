@@ -12,7 +12,7 @@ class Parser;
 
 class CreateCmdFactory{
 public:
-    static std::map<std::string, ICommand*> init();
+    static void init();
     static ICommand* create(const Parser& cmdName);
     static void release();
 

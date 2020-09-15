@@ -9,6 +9,8 @@
 #include "dup_cmd.h"
 #include "parser.h"
 
+std::map<std::string, ICommand*> CreateCmdFactory::s_commands;
+
 ICommand* CreateCmdFactory::create(const Parser& cmd){
     try{
         s_commands.at(cmd.getCmdName())->createCmd(cmd);
@@ -19,14 +21,11 @@ ICommand* CreateCmdFactory::create(const Parser& cmd){
     }
 }
 
-std::map<std::string, ICommand*> CreateCmdFactory::s_commands = CreateCmdFactory::init();
 
-std::map<std::string, ICommand*> CreateCmdFactory::init(){
-    std::map<std::string, ICommand*> temp;
-    temp.insert(std::pair<std::string, ICommand*> ("new", new NewCmd()));
-    temp.insert(std::pair<std::string, ICommand*> ("load", new LoadCmd()));
-    temp.insert(std::pair<std::string, ICommand*> ("dup", new DupCmd()));
-    return temp;
+void CreateCmdFactory::init(){
+    s_commands.insert(std::pair<std::string, ICommand*> ("new", new NewCmd()));
+    s_commands.insert(std::pair<std::string, ICommand*> ("load", new LoadCmd()));
+    s_commands.insert(std::pair<std::string, ICommand*> ("dup", new DupCmd()));
 }
 
 void CreateCmdFactory::release(){
