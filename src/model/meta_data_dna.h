@@ -18,6 +18,7 @@ public:
     const DnaSequence* getDnaSeq()const {return m_dna;}
     size_t getCounter()const {return m_counter;}
     void increaseCounter(){++m_counter;}
+    void setName(const std::string& newName);
 
 private:
     DnaSequence* m_dna;

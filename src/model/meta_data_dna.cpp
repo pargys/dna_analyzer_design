@@ -10,3 +10,7 @@ MetaDataDna::MetaDataDna(const MetaDataDna& other){
     m_status = other.m_status;
     m_counter = 0;
 }
+
+void MetaDataDna::setName(const std::string &newName) {
+    m_name = newName;
+}
