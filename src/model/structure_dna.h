@@ -21,6 +21,7 @@ public:
     void eraseDna(size_t id);
     std::map<size_t, MetaDataDna*> getIdMap() {return m_idStructure;}
     std::map<std::string, MetaDataDna*> getNameMap() {return m_nameStructure;}
+    void renameDna(const std::string& name, const std::string& newName);
 
 private:
     std::map<size_t, MetaDataDna*> m_idStructure;

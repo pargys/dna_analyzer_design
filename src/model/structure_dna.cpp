@@ -30,5 +30,12 @@ void StructureDna::eraseDna(size_t id) {
     m_nameStructure.erase(name);
 }
 
+void StructureDna::renameDna(const std::string &name, const std::string &newName) {
+    m_nameStructure[newName] = m_nameStructure[name];
+    m_nameStructure[name] = NULL;
+    m_nameStructure[newName]->setName(newName);
+    m_nameStructure.erase(name);
+}
+
 
 
