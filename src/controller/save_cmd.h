@@ -5,10 +5,10 @@
 #ifndef SRC_SAVE_CMD_H
 #define SRC_SAVE_CMD_H
 
-#include "creation_cmds.h"
+#include "management_cmds.h"
 #include <string>
 
-class SaveCmd: public CreationCmds{
+class SaveCmd: public ManagementCmds{
 public:
     /*virtual*/void createCmd(const Parser& cmd);
     /*virtual*/void run(const Parser& cmd, StructureDna& structure, IWriter& output, IReader& input);
