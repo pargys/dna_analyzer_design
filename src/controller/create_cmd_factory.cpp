@@ -11,6 +11,7 @@
 #include "len_cmd.h"
 #include "del_cmd.h"
 #include "rename_cmd.h"
+#include "find_cmd.h"
 #include "parser.h"
 
 std::map<std::string, ICommand*> CreateCmdFactory::s_commands;
@@ -34,6 +35,7 @@ void CreateCmdFactory::init(){
     s_commands.insert(std::pair<std::string, ICommand*> ("len", new LenCmd()));
     s_commands.insert(std::pair<std::string, ICommand*> ("del", new DelCmd()));
     s_commands.insert(std::pair<std::string, ICommand*> ("rename", new RenameCmd()));
+    s_commands.insert(std::pair<std::string, ICommand*> ("find", new FindCmd()));
 }
 
 void CreateCmdFactory::release(){
@@ -44,5 +46,6 @@ void CreateCmdFactory::release(){
     delete s_commands.at("len");
     delete s_commands.at("del");
     delete s_commands.at("rename");
+    delete s_commands.at("find");
 }
 
