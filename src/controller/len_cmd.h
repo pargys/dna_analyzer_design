@@ -5,9 +5,9 @@
 #ifndef SRC_LEN_CMD_H
 #define SRC_LEN_CMD_H
 
-#include "creation_cmds.h"
+#include "analysis_cmds.h"
 
-class LenCmd: public CreationCmds{
+class LenCmd: public AnalysisCmds{
 public:
     /*virtual*/void createCmd(const Parser& cmd);
     /*virtual*/void run(const Parser& cmd, StructureDna& structure, IWriter& output, IReader& input);
