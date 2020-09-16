@@ -53,7 +53,7 @@ void LoadCmd::run(const Parser &cmd, StructureDna& structure, IWriter& output, I
 }
 
 void LoadCmd::print(StructureDna& structure, IWriter& writer){
-    MetaDataDna metaData(structure.findDna(MetaDataDna::getId()));
+    MetaDataDna metaData(structure.findDna(MetaDataDna::getLastId()));
     std::string dna = metaData.getDnaSeq()->getDna();
     size_t n = dna.length();
 
