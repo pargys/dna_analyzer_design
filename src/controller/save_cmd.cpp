@@ -24,28 +24,35 @@ bool SaveCmd::isValid(const Parser &cmd) {
     return true;
 }
 
+size_t SaveCmd::getIdDna(StructureDna &structure, const std::string& cmd, IWriter &output){
 
-void SaveCmd::run(const Parser& cmd, StructureDna& structure, IWriter& output, IReader& input){
-    size_t id;
-    std::string name, fileName;
-    if (cmd.getParams()[0][0] == '@'){
-        name = cmd.getParams()[0].substr(1);
+    if (cmd[0] == '@'){
+        std::string name = cmd.substr(1);
 
         if (!structure.isExist(name)){
-            output.write("name is not exist! please enter again\n");
-            return;
+            output.write("name is not exist. please enter again\n");
+            return 0;
         }
-        id = structure.findDna(name).getId();
+        return structure.findDna(name).getId();
     }
     else {
-        id = stringToNum(cmd.getParams()[0].substr(1));
+        size_t id = stringToNum(cmd.substr(1));
 
         if (!structure.isExist(id)){
-            output.write("id is not exist! please enter again\n");
-            return;
+            output.write("id is not exist. please enter again\n");
+            return 0;
         }
-        name = structure.findDna(id).getName();
+        return id;
     }
+}
+
+void SaveCmd::run(const Parser& cmd, StructureDna& structure, IWriter& output, IReader& input){
+    size_t id = getIdDna(structure, cmd.getParams()[0], output);
+
+    if (!id){
+        return;
+    }
+    std::string fileName, name = structure.findDna(id).getName();
     cmd.getParams().size() == 2 ? fileName = cmd.getParams()[1].substr(1) : fileName = name;
     FileWriter fileWriter("../model/raw_dna_files/" + fileName + ".rawdna");
     fileWriter.write(structure.findDna(id).getDnaSeq()->getDna());
@@ -57,3 +64,4 @@ void SaveCmd::createCmd(const Parser &cmd) {
         throw std::invalid_argument("invalid nums of arguments!");
     }
 }
+

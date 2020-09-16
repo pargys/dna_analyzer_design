@@ -11,6 +11,7 @@ void Terminal::startApp(IReader& input, IWriter& output, StructureDna& structure
 
     while (true){
         Parser p;
+        output.write("> cmd >>>");
         input.read();
         p.parseInput(input.getStr());
 

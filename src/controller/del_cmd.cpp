@@ -9,7 +9,7 @@
 #include "auxiliary_functions.h"
 
 
-bool DelCmd::isValid(const Parser &cmd) {
+bool DelCmd::isValid(const Parser &cmd){
 
     if(cmd.getParams().size() != 1){
         return false;
@@ -21,27 +21,35 @@ bool DelCmd::isValid(const Parser &cmd) {
     return true;
 }
 
-void DelCmd::run(const Parser& cmd, StructureDna& structure, IWriter& output, IReader& input){
-    size_t id;
-    std::string name;
-    if (cmd.getParams()[0][0] == '@'){
-        name = cmd.getParams()[0].substr(1);
+size_t DelCmd::getIdDna(StructureDna& structure, const std::string& cmd, IWriter& output){
+
+    if (cmd[0] == '@'){
+        std::string name = cmd.substr(1);
 
         if (!structure.isExist(name)){
-            output.write("name is not exist! please enter again\n");
-            return;
+            output.write("name is not exist. please enter again\n");
+            return 0;
         }
-        id = structure.findDna(name).getId();
+        return structure.findDna(name).getId();
     }
     else {
-        id = stringToNum(cmd.getParams()[0].substr(1));
+        size_t id = stringToNum(cmd.substr(1));
 
         if (!structure.isExist(id)){
-            output.write("id is not exist! please enter again\n");
-            return;
+            output.write("id is not exist. please enter again\n");
+            return 0;
         }
-        name = structure.findDna(id).getName();
+        return id;
     }
+}
+
+void DelCmd::run(const Parser& cmd, StructureDna& structure, IWriter& output, IReader& input){
+    size_t id = getIdDna(structure, cmd.getParams()[0], output);
+
+    if (!id){
+        return;
+    }
+    std::string name = structure.findDna(id).getName();
     std::string dnaSeq = structure.findDna(id).getDnaSeq()->getDna();
     bool isConfirm = isConfirmed(name, dnaSeq, output, input);
     if (isConfirm){

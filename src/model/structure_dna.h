@@ -18,6 +18,7 @@ public:
     MetaDataDna& findDna(const std::string& name);
     bool isExist(size_t id) const;
     bool isExist(const std::string& name) const;
+    void eraseDna(size_t id);
     std::map<size_t, MetaDataDna*> getIdMap() {return m_idStructure;}
     std::map<std::string, MetaDataDna*> getNameMap() {return m_nameStructure;}
 

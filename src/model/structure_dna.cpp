@@ -24,3 +24,11 @@ bool StructureDna::isExist(const std::string& name) const{
     return m_nameStructure.find(name) != m_nameStructure.end();
 }
 
+void StructureDna::eraseDna(size_t id) {
+    std::string name = findDna(id).getName();
+    m_idStructure.erase(id);
+    m_nameStructure.erase(name);
+}
+
+
+

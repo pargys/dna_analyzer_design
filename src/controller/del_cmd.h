@@ -18,6 +18,7 @@ private:
     bool isValid(const Parser& cmd);
     bool isConfirmed(std::string name, std::string dnaSeq, IWriter& output, IReader& input);
     void print(size_t id, std::string name, std::string dnaSeq, IWriter& output, bool isDeleted);
+    size_t getIdDna(StructureDna& structure, const std::string& cmd, IWriter& output);
 };
 
 #endif //SRC_DEL_CMD_H

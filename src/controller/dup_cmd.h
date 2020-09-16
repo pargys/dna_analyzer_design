@@ -6,6 +6,7 @@
 #define SRC_DUP_CMD_H
 
 #include "creation_cmds.h"
+#include <string>
 
 class DupCmd: public CreationCmds{
 public:
@@ -16,8 +17,8 @@ public:
 private:
     bool isValid(const Parser& cmd);
     void print(StructureDna& structure, IWriter& output);
-    void runForId(const Parser& cmd, StructureDna& structure, IWriter& output);
-    void runForName(const Parser& cmd, StructureDna& structure, IWriter& output);
+    size_t getIdDna(StructureDna& structure, const std::string& cmd, IWriter& output);
+    std::string getNewName(StructureDna& structure, size_t id, std::string name);
 };
 
 #endif //SRC_DUP_CMD_H

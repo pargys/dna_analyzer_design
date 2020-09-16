@@ -6,11 +6,13 @@
 #define SRC_SAVE_CMD_H
 
 #include "creation_cmds.h"
+#include <string>
 
 class SaveCmd: public CreationCmds{
 public:
     /*virtual*/void createCmd(const Parser& cmd);
     /*virtual*/void run(const Parser& cmd, StructureDna& structure, IWriter& output, IReader& input);
+    size_t getIdDna(StructureDna& structure, const std::string& cmd, IWriter& output);
     /*virtual*/~SaveCmd(){}
 
 private:
