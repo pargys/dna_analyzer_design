@@ -22,7 +22,11 @@ bool LenCmd::isValid(const Parser &cmd) {
 }
 
 void LenCmd::run(const Parser &cmd, StructureDna& structure, IWriter& output, IReader& input){
-    size_t id = stringToNum(cmd.getParams()[0].substr(1));
+    size_t id = getIdDna(structure, cmd.getParams()[0], output);
+
+    if (!id){
+        return;
+    }
 
     if (!structure.isExist(id)){
         output.write("id is not exist! please enter again\n");
@@ -41,4 +45,26 @@ void LenCmd::createCmd(const Parser &cmd) {
 
 void LenCmd::print(size_t len, IWriter &output) {
     output.write(numToString(len));
+}
+
+size_t LenCmd::getIdDna(StructureDna &structure, const std::string &cmd, IWriter &output){
+
+    if (cmd[0] == '@'){
+        std::string name = cmd.substr(1);
+
+        if (!structure.isExist(name)){
+            output.write("name is not exist. please enter again\n");
+            return 0;
+        }
+        return structure.findDna(name).getId();
+    }
+    else {
+        size_t id = stringToNum(cmd.substr(1));
+
+        if (!structure.isExist(id)){
+            output.write("id is not exist. please enter again\n");
+            return 0;
+        }
+        return id;
+    }
 }

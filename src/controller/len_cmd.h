@@ -6,6 +6,7 @@
 #define SRC_LEN_CMD_H
 
 #include "analysis_cmds.h"
+#include <string>
 
 class LenCmd: public AnalysisCmds{
 public:
@@ -16,6 +17,7 @@ public:
 private:
     bool isValid(const Parser& cmd);
     void print(size_t len, IWriter& output);
+    size_t getIdDna(StructureDna& structure, const std::string& cmd, IWriter& output);
 };
 
 #endif //SRC_LEN_CMD_H
