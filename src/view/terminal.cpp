@@ -6,8 +6,7 @@
 #include "../controller/create_cmd_factory.h"
 #include "../controller/i_command.h"
 
-void Terminal::startApp(IReader& input, IWriter& output, StructureDna& structure){
-    CreateCmdFactory::init();
+void Terminal::startApp(IReader& input, IWriter& output, StructureDna& structure, Callback<System>& callback){
 
     while (true){
         Parser p;
@@ -20,13 +19,12 @@ void Terminal::startApp(IReader& input, IWriter& output, StructureDna& structure
         }
 
         try {
-            ICommand* cmd = CreateCmdFactory::create(p);
-            cmd->run(p, structure, output, input);
+            callback(p, structure, output, input);
         }
 
         catch (const std::exception& e){
             output.write(e.what());
         }
     }
-    CreateCmdFactory::release();
 }
+

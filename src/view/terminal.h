@@ -13,7 +13,7 @@ class IReader;
 
 class Terminal: public UI{
 public:
-    void startApp(IReader& input, IWriter& output, StructureDna& structure);
+    void startApp(IReader& input, IWriter& output, StructureDna& structure, Callback<System>& callback);
 };
 
 #endif //SRC_TERMINAL_H

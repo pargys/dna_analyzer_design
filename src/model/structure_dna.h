@@ -8,8 +8,6 @@
 #include <map>
 #include "meta_data_dna.h"
 
-class IdDna;
-class NameDna;
 
 class StructureDna{
 public:
