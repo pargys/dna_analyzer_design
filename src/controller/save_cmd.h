@@ -11,8 +11,8 @@
 class SaveCmd: public ManagementCmds{
 public:
     /*virtual*/void createCmd(const Parser& cmd);
-    /*virtual*/void run(const Parser& cmd, StructureDna& structure, IWriter& output, IReader& input);
-    size_t getIdDna(StructureDna& structure, const std::string& cmd, IWriter& output);
+    /*virtual*/void run(const Parser& cmd, StructureDna& structure, const IOCallback<UI>& ioCallback);
+    size_t getIdDna(StructureDna& structure, const std::string& cmd, const IOCallback<UI>& ioCallback);
     /*virtual*/~SaveCmd(){}
 
 private:

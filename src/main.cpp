@@ -6,9 +6,9 @@
 
 int main() {
     System system;
-    Terminal terminal;
     KeyboardReader input;
     ScreenWriter output;
-    system.start(terminal, input, output);
+    Terminal terminal(input, output);
+    system.start(terminal);
     return 0;
 }

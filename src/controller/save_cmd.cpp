@@ -2,10 +2,8 @@
 // Created by y on 9/15/20.
 //
 #include "save_cmd.h"
-#include "../model/structure_dna.h"
 #include "parser.h"
 #include "auxiliary_functions.h"
-#include "../view/iwriter.h"
 #include "../view/file_writer.h"
 
 
@@ -24,13 +22,13 @@ bool SaveCmd::isValid(const Parser &cmd) {
     return true;
 }
 
-size_t SaveCmd::getIdDna(StructureDna &structure, const std::string& cmd, IWriter &output){
+size_t SaveCmd::getIdDna(StructureDna &structure, const std::string& cmd, const IOCallback<UI>& ioCallback){
 
     if (cmd[0] == '@'){
         std::string name = cmd.substr(1);
 
         if (!structure.isExist(name)){
-            output.write("name is not exist. please enter again\n");
+            ioCallback.runWrite("name is not exist. please enter again\n");
             return 0;
         }
         return structure.findDna(name).getId();
@@ -39,15 +37,15 @@ size_t SaveCmd::getIdDna(StructureDna &structure, const std::string& cmd, IWrite
         size_t id = stringToNum(cmd.substr(1));
 
         if (!structure.isExist(id)){
-            output.write("id is not exist. please enter again\n");
+            ioCallback.runWrite("id is not exist. please enter again\n");
             return 0;
         }
         return id;
     }
 }
 
-void SaveCmd::run(const Parser& cmd, StructureDna& structure, IWriter& output, IReader& input){
-    size_t id = getIdDna(structure, cmd.getParams()[0], output);
+void SaveCmd::run(const Parser& cmd, StructureDna& structure, const IOCallback<UI>& ioCallback){
+    size_t id = getIdDna(structure, cmd.getParams()[0], ioCallback);
 
     if (!id){
         return;
@@ -61,7 +59,7 @@ void SaveCmd::run(const Parser& cmd, StructureDna& structure, IWriter& output, I
 void SaveCmd::createCmd(const Parser &cmd) {
 
     if(!isValid(cmd)){
-        throw std::invalid_argument("invalid nums of arguments!");
+        throw std::invalid_argument("invalid nums of arguments");
     }
 }
 

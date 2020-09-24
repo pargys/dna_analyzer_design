@@ -23,17 +23,17 @@ bool CountCmd::isValid(const Parser &cmd) {
 void CountCmd::createCmd(const Parser &cmd) {
 
     if (!isValid(cmd)){
-        throw std::invalid_argument("invalid nums of arguments!");
+        throw std::invalid_argument("invalid nums of arguments");
     }
 }
 
-size_t CountCmd::getIdDna(StructureDna &structure, const std::string &cmd, IWriter &output){
+size_t CountCmd::getIdDna(StructureDna &structure, const std::string &cmd, const IOCallback<UI>& ioCallback){
 
     if (cmd[0] == '@'){
         std::string name = cmd.substr(1);
 
         if (!structure.isExist(name)){
-            output.write("name is not exist. please enter again\n");
+            ioCallback.runWrite("name is not exist. please enter again\n");
             return 0;
         }
         return structure.findDna(name).getId();
@@ -42,15 +42,15 @@ size_t CountCmd::getIdDna(StructureDna &structure, const std::string &cmd, IWrit
         size_t id = stringToNum(cmd.substr(1));
 
         if (!structure.isExist(id)){
-            output.write("id is not exist. please enter again\n");
+            ioCallback.runWrite("id is not exist. please enter again\n");
             return 0;
         }
         return id;
     }
 }
 
-void CountCmd::run(const Parser &cmd, StructureDna &structure, IWriter &output, IReader &input) {
-    size_t id = getIdDna(structure, cmd.getParams()[0], output);
+void CountCmd::run(const Parser &cmd, StructureDna &structure, const IOCallback<UI>& ioCallback) {
+    size_t id = getIdDna(structure, cmd.getParams()[0], ioCallback);
 
     if (!id){
         return;
@@ -59,7 +59,7 @@ void CountCmd::run(const Parser &cmd, StructureDna &structure, IWriter &output, 
     bool isExistSub = cmd.getParams()[1][0] == '@' or cmd.getParams()[1][0] == '#';
 
     if (isExistSub){
-        size_t subSeqId = getIdDna(structure, cmd.getParams()[1], output);
+        size_t subSeqId = getIdDna(structure, cmd.getParams()[1], ioCallback);
         subSeq = structure.findDna(subSeqId).getDnaSeq()->getDna();
     }
 
@@ -68,9 +68,9 @@ void CountCmd::run(const Parser &cmd, StructureDna &structure, IWriter &output, 
     }
     DnaSequence seq =  *(structure.findDna(id).getDnaSeq());
     size_t count = seq.count(subSeq);
-    print(count, output);
+    print(count, ioCallback);
 }
 
-void CountCmd::print(size_t index, IWriter &output){
-    output.write(numToString(index));
+void CountCmd::print(size_t index, const IOCallback<UI>& ioCallback){
+    ioCallback.runWrite(numToString(index) + "\n");
 }

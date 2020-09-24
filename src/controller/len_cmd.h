@@ -11,13 +11,13 @@
 class LenCmd: public AnalysisCmds{
 public:
     /*virtual*/void createCmd(const Parser& cmd);
-    /*virtual*/void run(const Parser& cmd, StructureDna& structure, IWriter& output, IReader& input);
+    /*virtual*/void run(const Parser& cmd, StructureDna& structure, const IOCallback<UI>& ioCallback);
     /*virtual*/~LenCmd(){}
 
 private:
     bool isValid(const Parser& cmd);
-    void print(size_t len, IWriter& output);
-    size_t getIdDna(StructureDna& structure, const std::string& cmd, IWriter& output);
+    void print(size_t len, const IOCallback<UI>& ioCallback);
+    size_t getIdDna(StructureDna& structure, const std::string& cmd, const IOCallback<UI>& ioCallback);
 };
 
 #endif //SRC_LEN_CMD_H

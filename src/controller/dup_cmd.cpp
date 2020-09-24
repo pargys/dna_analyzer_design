@@ -2,11 +2,8 @@
 // Created by y on 7/6/20.
 //
 #include "dup_cmd.h"
-#include "../model/structure_dna.h"
 #include "parser.h"
 #include "auxiliary_functions.h"
-#include "../view/iwriter.h"
-
 
 bool DupCmd::isValid(const Parser &cmd) {
 
@@ -28,13 +25,13 @@ bool DupCmd::isValid(const Parser &cmd) {
 }
 
 
-size_t DupCmd::getIdDna(StructureDna &structure, const std::string &cmd, IWriter &output){
+size_t DupCmd::getIdDna(StructureDna &structure, const std::string &cmd, const IOCallback<UI>& ioCallback){
 
     if (cmd[0] == '@'){
         std::string name = cmd.substr(1);
 
         if (!structure.isExist(name)){
-            output.write("name is not exist. please enter again\n");
+            ioCallback.runWrite("name is not exist. please enter again\n");
             return 0;
         }
         return structure.findDna(name).getId();
@@ -43,7 +40,7 @@ size_t DupCmd::getIdDna(StructureDna &structure, const std::string &cmd, IWriter
         size_t id = stringToNum(cmd.substr(1));
 
         if (!structure.isExist(id)){
-            output.write("id is not exist. please enter again\n");
+            ioCallback.runWrite("id is not exist. please enter again\n");
             return 0;
         }
         return id;
@@ -61,8 +58,8 @@ std::string DupCmd::getNewName(StructureDna& structure, size_t id, std::string n
     return dnaName;
 }
 
-void DupCmd::run(const Parser& cmd, StructureDna& structure, IWriter& output, IReader& input) {
-    size_t id = getIdDna(structure, cmd.getParams()[0], output);
+void DupCmd::run(const Parser& cmd, StructureDna& structure, const IOCallback<UI>& ioCallback) {
+    size_t id = getIdDna(structure, cmd.getParams()[0], ioCallback);
 
     if (!id){
         return;
@@ -76,26 +73,26 @@ void DupCmd::run(const Parser& cmd, StructureDna& structure, IWriter& output, IR
         dnaName = cmd.getParams()[1].substr(1);
 
         if (structure.isExist(dnaName)){
-            output.write("name is exist. please enter again\n");
+            ioCallback.runWrite("name is exist. please enter again\n");
             return;
         }
     }
     std::string dna = structure.findDna(id).getDnaSeq()->getDna();
     MetaDataDna* data = new MetaDataDna(dna, dnaName, (std::string)"new");
     structure.add(data);
-    print(structure, output);
+    print(structure, ioCallback);
 }
 
-void DupCmd::print(StructureDna &structure, IWriter &output){
+void DupCmd::print(StructureDna &structure, const IOCallback<UI>& ioCallback){
     MetaDataDna metaData(structure.findDna(MetaDataDna::getLastId()));
     std::string id = numToString(metaData.getId());
-    output.write("[" + id + "]" + " " + metaData.getName() + ": " + metaData.getDnaSeq()->getDna() + "\n");
+    ioCallback.runWrite("[" + id + "]" + " " + metaData.getName() + ": " + metaData.getDnaSeq()->getDna() + "\n");
 }
 
 void DupCmd::createCmd(const Parser &cmd) {
 
     if(!isValid(cmd)){
-        throw std::invalid_argument("invalid nums of arguments!");
+        throw std::invalid_argument("invalid nums of arguments");
     }
 }
 

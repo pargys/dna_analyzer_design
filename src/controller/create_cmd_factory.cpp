@@ -4,6 +4,7 @@
 
 #include <stdexcept>
 #include "create_cmd_factory.h"
+#include "parser.h"
 #include "new_cmd.h"
 #include "load_cmd.h"
 #include "dup_cmd.h"
@@ -13,7 +14,8 @@
 #include "rename_cmd.h"
 #include "find_cmd.h"
 #include "count_cmd.h"
-#include "parser.h"
+#include "enter_cmd.h"
+
 
 std::map<std::string, ICommand*> CreateCmdFactory::s_commands;
 
@@ -24,7 +26,7 @@ ICommand* CreateCmdFactory::create(const Parser& cmd){
     }
 
     catch (const std::out_of_range& e){
-        return NULL;
+        throw std::invalid_argument("command not found. press help to see available commands");
     }
 }
 
@@ -38,6 +40,8 @@ void CreateCmdFactory::init(){
     s_commands.insert(std::pair<std::string, ICommand*> ("rename", new RenameCmd()));
     s_commands.insert(std::pair<std::string, ICommand*> ("find", new FindCmd()));
     s_commands.insert(std::pair<std::string, ICommand*> ("count", new CountCmd()));
+    s_commands.insert(std::pair<std::string, ICommand*> ("", new EnterCmd()));
+
 }
 
 void CreateCmdFactory::release(){
@@ -50,5 +54,6 @@ void CreateCmdFactory::release(){
     delete s_commands.at("rename");
     delete s_commands.at("find");
     delete s_commands.at("count");
+    delete s_commands.at("");
 }
 

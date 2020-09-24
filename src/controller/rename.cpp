@@ -3,8 +3,6 @@
 //
 
 #include "rename_cmd.h"
-#include "../model/structure_dna.h"
-#include "../view/iwriter.h"
 #include "parser.h"
 #include "auxiliary_functions.h"
 
@@ -21,8 +19,8 @@ bool RenameCmd::isValid(const Parser &cmd){
     return true;
 }
 
-void RenameCmd::run(const Parser &cmd, StructureDna &structure, IWriter &output, IReader &input) {
-    size_t id = getIdDna(structure, cmd.getParams()[0], output);
+void RenameCmd::run(const Parser &cmd, StructureDna &structure, const IOCallback<UI>& ioCallback) {
+    size_t id = getIdDna(structure, cmd.getParams()[0], ioCallback);
 
     if (!id){
         return;
@@ -38,17 +36,17 @@ void RenameCmd::run(const Parser &cmd, StructureDna &structure, IWriter &output,
 void RenameCmd::createCmd(const Parser &cmd) {
 
     if (!isValid(cmd)){
-        throw std::invalid_argument("invalid nums of arguments!");
+        throw std::invalid_argument("invalid nums of arguments");
     }
 }
 
-size_t RenameCmd::getIdDna(StructureDna &structure, const std::string &cmd, IWriter &output) {
+size_t RenameCmd::getIdDna(StructureDna &structure, const std::string &cmd, const IOCallback<UI>& ioCallback) {
 
     if (cmd[0] == '@'){
         std::string name = cmd.substr(1);
 
         if (!structure.isExist(name)){
-            output.write("name is not exist. please enter again\n");
+            ioCallback.runWrite("name is not exist. please enter again\n");
             return 0;
         }
         return structure.findDna(name).getId();
@@ -57,7 +55,7 @@ size_t RenameCmd::getIdDna(StructureDna &structure, const std::string &cmd, IWri
         size_t id = stringToNum(cmd.substr(1));
 
         if (!structure.isExist(id)){
-            output.write("id is not exist. please enter again\n");
+            ioCallback.runWrite("id is not exist. please enter again\n");
             return 0;
         }
         return id;

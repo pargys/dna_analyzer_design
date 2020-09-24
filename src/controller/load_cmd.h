@@ -10,12 +10,12 @@
 class LoadCmd: public CreationCmds{
 public:
     /*virtual*/void createCmd(const Parser& cmd);
-    /*virtual*/void run(const Parser& cmd, StructureDna& structure, IWriter& output, IReader& input);
+    /*virtual*/void run(const Parser& cmd, StructureDna& structure, const IOCallback<UI>& ioCallback);
     /*virtual*/~LoadCmd(){}
 
 private:
     bool isValid(const Parser& cmd);
-    void print(StructureDna& structure, IWriter& output);
+    void print(StructureDna& structure, const IOCallback<UI>& ioCallback);
 };
 
 #endif //SRC_LOAD_CMD_H

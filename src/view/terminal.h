@@ -5,7 +5,6 @@
 #ifndef SRC_TERMINAL_H
 #define SRC_TERMINAL_H
 
-#include "../model/structure_dna.h"
 #include "iwriter.h"
 #include "ui.h"
 
@@ -13,7 +12,10 @@ class IReader;
 
 class Terminal: public UI{
 public:
-    void startApp(IReader& input, IWriter& output, StructureDna& structure, Callback<System>& callback);
+    Terminal(IReader& input, IWriter& output) : UI(input, output) {}
+    /*virtual*/ void startApp(StructureDna& structure, Callback<System>& callback);
+    /*virtual*/ void write(const std::string& output) const;
+    /*virtual*/ const std::string& read() const;
 };
 
 #endif //SRC_TERMINAL_H

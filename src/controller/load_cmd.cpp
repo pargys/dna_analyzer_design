@@ -4,9 +4,7 @@
 
 #include "parser.h"
 #include "load_cmd.h"
-#include "../model/structure_dna.h"
 #include "../view/file_reader.h"
-#include "../view/iwriter.h"
 #include "auxiliary_functions.h"
 
 
@@ -24,7 +22,7 @@ bool LoadCmd::isValid(const Parser &cmd) {
     return true;
 }
 
-void LoadCmd::run(const Parser &cmd, StructureDna& structure, IWriter& output, IReader& input){
+void LoadCmd::run(const Parser &cmd, StructureDna& structure, const IOCallback<UI>& ioCallback){
     std::string dnaName, fileName = cmd.getParams()[0];
     FileReader file(fileName.c_str());
     file.read();
@@ -42,17 +40,17 @@ void LoadCmd::run(const Parser &cmd, StructureDna& structure, IWriter& output, I
         dnaName = cmd.getParams()[1].substr(1);
 
         if (structure.isExist(dnaName)){
-            output.write("name is already exist! please enter again\n");
+            ioCallback.runWrite("name is already exist. please enter again\n");
             return;
         }
     }
 
     MetaDataDna* data = new MetaDataDna(file, dnaName, (std::string)"new");
     structure.add(data);
-    print(structure, output);
+    print(structure, ioCallback);
 }
 
-void LoadCmd::print(StructureDna& structure, IWriter& writer){
+void LoadCmd::print(StructureDna& structure, const IOCallback<UI>& ioCallback){
     MetaDataDna metaData(structure.findDna(MetaDataDna::getLastId()));
     std::string dna = metaData.getDnaSeq()->getDna();
     size_t n = dna.length();
@@ -61,12 +59,12 @@ void LoadCmd::print(StructureDna& structure, IWriter& writer){
         dna = dna.substr(0, 31) + "..." + dna.substr(n-3, n-1);
     }
     std::string id = numToString(metaData.getId());
-    writer.write("[" + id + "]" + " " + metaData.getName() + ": " + dna + "\n");
+    ioCallback.runWrite("[" + id + "]" + " " + metaData.getName() + ": " + dna + "\n");
 }
 
 void LoadCmd::createCmd(const Parser &cmd) {
 
     if (!isValid(cmd)){
-        throw std::invalid_argument("invalid nums of arguments!");
+        throw std::invalid_argument("invalid nums of arguments");
     }
 }

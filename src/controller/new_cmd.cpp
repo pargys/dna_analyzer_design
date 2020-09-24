@@ -4,8 +4,6 @@
 
 #include "parser.h"
 #include "new_cmd.h"
-#include "../model/structure_dna.h"
-#include "../view/iwriter.h"
 #include "auxiliary_functions.h"
 
 bool NewCmd::isValid(const Parser &cmd) {
@@ -23,7 +21,7 @@ bool NewCmd::isValid(const Parser &cmd) {
     return true;
 }
 
-void NewCmd::run(const Parser& cmd, StructureDna& structure, IWriter& output, IReader& input) {
+void NewCmd::run(const Parser& cmd, StructureDna& structure, const IOCallback<UI>& ioCallback) {
     static size_t countDna;
     std::string dnaName;
 
@@ -38,28 +36,30 @@ void NewCmd::run(const Parser& cmd, StructureDna& structure, IWriter& output, IR
         dnaName = cmd.getParams()[1].substr(1);
 
         if (structure.isExist(dnaName)){
-            output.write("name is already exist! please enter again\n");
+            ioCallback.runWrite("name is already exist. please enter again\n");
+
             return;
         }
     }
     MetaDataDna *data = new MetaDataDna(cmd.getParams()[0], dnaName, (std::string) "new");
     structure.add(data);
-    print(structure, output);
+    print(structure, ioCallback);
 }
 
 
-void NewCmd::print(StructureDna& structure, IWriter& output){
+void NewCmd::print(StructureDna& structure, const IOCallback<UI>& ioCallback){
     MetaDataDna metaData(structure.findDna(MetaDataDna::getLastId()));
     std::string id = numToString(metaData.getId());
 
-    output.write("[" + id + "]" + " " + metaData.getName() + ": " + metaData.getDnaSeq()->getDna() + "\n");
+    ioCallback.runWrite("[" + id + "]" + " " + metaData.getName() + ": " + metaData.getDnaSeq()->getDna() + "\n");
 }
 
 void NewCmd::createCmd(const Parser &cmd) {
 
     if (!isValid(cmd)){
-        throw std::invalid_argument("invalid nums of arguments!");
+        throw std::invalid_argument("invalid nums of arguments");
     }
 }
+
 
 

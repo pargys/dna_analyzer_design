@@ -11,13 +11,13 @@
 class FindCmd: public AnalysisCmds{
 public:
     /*virtual*/void createCmd(const Parser& cmd);
-    /*virtual*/void run(const Parser& cmd, StructureDna& structure, IWriter& output, IReader& input);
+    /*virtual*/void run(const Parser& cmd, StructureDna& structure, const IOCallback<UI>& ioCallback);
     /*virtual*/~FindCmd(){}
 
 private:
     bool isValid(const Parser& cmd);
-    size_t getIdDna(StructureDna& structure, const std::string& cmd, IWriter& output);
-    void print(size_t index, IWriter &output);
+    size_t getIdDna(StructureDna& structure, const std::string& cmd, const IOCallback<UI>& ioCallback);
+    void print(size_t index, const IOCallback<UI>& ioCallback);
 };
 
 

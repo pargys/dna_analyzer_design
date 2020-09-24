@@ -5,6 +5,8 @@
 #ifndef SRC_SYSTEM_H
 #define SRC_SYSTEM_H
 
+#include "io_callback.h"
+
 class IReader;
 class IWriter;
 class UI;
@@ -13,8 +15,8 @@ class StructureDna;
 
 class System{
 public:
-    void start(UI& ui, IReader& input, IWriter& output);
-    void executeCmd(Parser& p, StructureDna& structure, IWriter& output, IReader& input);
+    void start(UI& ui);
+    void executeCmd(Parser& p, StructureDna& structure, const IOCallback<UI>& ioCallback);
 };
 
 #endif //SRC_SYSTEM_H

@@ -12,7 +12,14 @@
 
 class UI{
 public:
-    virtual void startApp(IReader& input, IWriter& output, StructureDna& structure, Callback<System>& callback) = 0;
+    UI(IReader& input, IWriter& output) : m_input(input), m_output(output){}
+    virtual void startApp(StructureDna& structure, Callback<System>& callback) = 0;
+    virtual void write(const std::string&) const = 0;
+    virtual const std::string & read() const = 0;
+
+protected:
+    IReader& m_input;
+    IWriter& m_output;
 };
 
 #endif //SRC_UI_H

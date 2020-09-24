@@ -11,7 +11,7 @@
 class CreationCmds: public ICommand{
 public:
     /*virtual*/ void createCmd(const Parser& cmd) = 0;
-    /*virtual*/ void run(const Parser& cmd, StructureDna& structure, IWriter& output, IReader& input) = 0;
+    /*virtual*/ void run(const Parser& cmd, StructureDna& structure, const IOCallback<UI>& ioCallback) = 0;
     /*virtual*/~CreationCmds() = 0;
 };
 

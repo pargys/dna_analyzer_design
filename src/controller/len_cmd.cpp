@@ -21,39 +21,39 @@ bool LenCmd::isValid(const Parser &cmd) {
     return true;
 }
 
-void LenCmd::run(const Parser &cmd, StructureDna& structure, IWriter& output, IReader& input){
-    size_t id = getIdDna(structure, cmd.getParams()[0], output);
+void LenCmd::run(const Parser &cmd, StructureDna& structure, const IOCallback<UI>& ioCallback){
+    size_t id = getIdDna(structure, cmd.getParams()[0], ioCallback);
 
     if (!id){
         return;
     }
 
     if (!structure.isExist(id)){
-        output.write("id is not exist! please enter again\n");
+        ioCallback.runWrite("id is not exist. please enter again\n");
         return;
     }
     size_t len = structure.findDna(id).getDnaSeq()->length();
-    print(len, output);
+    print(len, ioCallback);
 }
 
 void LenCmd::createCmd(const Parser &cmd) {
 
     if (!isValid(cmd)){
-        throw std::invalid_argument("invalid nums of arguments!");
+        throw std::invalid_argument("invalid nums of arguments");
     }
 }
 
-void LenCmd::print(size_t len, IWriter &output) {
-    output.write(numToString(len));
+void LenCmd::print(size_t len, const IOCallback<UI>& ioCallback) {
+    ioCallback.runWrite(numToString(len) + "\n");
 }
 
-size_t LenCmd::getIdDna(StructureDna &structure, const std::string &cmd, IWriter &output){
+size_t LenCmd::getIdDna(StructureDna &structure, const std::string &cmd, const IOCallback<UI>& ioCallback){
 
     if (cmd[0] == '@'){
         std::string name = cmd.substr(1);
 
         if (!structure.isExist(name)){
-            output.write("name is not exist. please enter again\n");
+            ioCallback.runWrite("name is not exist. please enter again\n");
             return 0;
         }
         return structure.findDna(name).getId();
@@ -62,7 +62,7 @@ size_t LenCmd::getIdDna(StructureDna &structure, const std::string &cmd, IWriter
         size_t id = stringToNum(cmd.substr(1));
 
         if (!structure.isExist(id)){
-            output.write("id is not exist. please enter again\n");
+            ioCallback.runWrite("id is not exist. please enter again\n");
             return 0;
         }
         return id;

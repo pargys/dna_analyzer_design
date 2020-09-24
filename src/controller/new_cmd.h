@@ -10,12 +10,12 @@
 class NewCmd: public CreationCmds{
 public:
     /*virtual*/void createCmd(const Parser& cmd);
-    /*virtual*/void run(const Parser& cmd, StructureDna& structure, IWriter& output, IReader&);
+    /*virtual*/void run(const Parser& cmd, StructureDna& structure, const IOCallback<UI>& ioCallback);
     /*virtual*/~NewCmd(){}
 
 private:
     bool isValid(const Parser& cmd);
-    void print(StructureDna& structure, IWriter& output);
+    void print(StructureDna& structure, const IOCallback<UI>& ioCallback);
 };
 
 #endif //SRC_NEW_CMD_H
