@@ -7,7 +7,8 @@ void Parser::parseInput(std::string input){
     size_t pos;
     std::string param;
     char delimiter=' ';
-    if((pos=input.find(delimiter)) == std::string::npos){
+
+    if ((pos=input.find(delimiter)) == std::string::npos){
         param = input.substr(0, pos);
         m_cmdName = param;
         return;
@@ -17,10 +18,13 @@ void Parser::parseInput(std::string input){
     m_cmdName = param;
     input.erase(0, pos+1);
 
-    while((pos=input.find(delimiter)) != std::string::npos){
+    while ((pos=input.find(delimiter)) != std::string::npos){
         param = input.substr(0, pos);
         m_params.push_back(param);
         input.erase(0, pos+1);
     }
-    m_params.push_back(input);
+
+    if (input != "") {
+        m_params.push_back(input);
+    }
 }
